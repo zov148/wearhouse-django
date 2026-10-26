@@ -2,6 +2,9 @@ from django.test import TestCase
 from django.urls import reverse
 from django.test import Client
 from .models import Category, Brand, BrandProfile, Size, Product
+from django.contrib import admin
+from django.contrib.auth import get_user_model
+from django.conf import settings
 
 
 class ShopPagesTests(TestCase):
@@ -79,7 +82,7 @@ class DatabaseTests(TestCase):
             self.assertTrue(response.context['form'].errors)
 
     def test_foreign_keys_and_many_to_many(self):
-        brand = Brand.objects.first()
+        brand = Brand.objects.get(name='WEARHOUSE')
         self.assertGreater(brand.products.count(), 1)
         size = Size.objects.get(name='M')
         self.assertGreater(size.products.count(), 1)
@@ -92,3 +95,47 @@ class DatabaseTests(TestCase):
         client.get(url)
         token = client.cookies['csrftoken'].value
         self.assertEqual(client.post(url, {'name': 'С токеном', 'csrfmiddlewaretoken': token}).status_code, 302)
+
+class AdminPanelTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = get_user_model().objects.create_superuser(username='admin_test', password='OnlyForAutomatedTests-42')
+
+    def test_admin_requires_login_and_site_link(self):
+        response = self.client.get(reverse('admin:index'))
+        self.assertRedirects(response, reverse('admin:login') + '?next=/admin/')
+        self.assertContains(self.client.get(reverse('shop:home')), 'href="/admin/"')
+
+    def test_russian_metadata_and_configuration(self):
+        self.assertEqual(settings.LANGUAGE_CODE, 'ru-ru')
+        self.assertEqual(settings.TIME_ZONE, 'Europe/Moscow')
+        for model, singular, plural in [(Category, 'Категория', 'Категории'), (Brand, 'Бренд', 'Бренды'), (BrandProfile, 'Профиль бренда', 'Профили брендов'), (Size, 'Размер', 'Размеры'), (Product, 'Товар', 'Товары')]:
+            self.assertEqual(model._meta.verbose_name, singular)
+            self.assertEqual(model._meta.verbose_name_plural, plural)
+            config = admin.site._registry[model]
+            self.assertTrue(config.list_display)
+            self.assertTrue(config.list_filter)
+            self.assertTrue(config.search_fields)
+
+    def test_all_model_changelists(self):
+        self.client.force_login(self.user)
+        for model in [Category, Brand, BrandProfile, Size, Product]:
+            response = self.client.get(reverse('admin:shop_' + model._meta.model_name + '_changelist'))
+            self.assertEqual(response.status_code, 200)
+            self.assertContains(response, model._meta.verbose_name_plural)
+
+    def test_product_search_and_category_filter(self):
+        self.client.force_login(self.user)
+        url = reverse('admin:shop_product_changelist')
+        response = self.client.get(url, {'q': 'Everyday'})
+        self.assertEqual(response.context['cl'].result_count, 1)
+        self.assertContains(response, 'Худи Everyday')
+        category = Category.objects.get(name='Худи')
+        response = self.client.get(url, {'category__id__exact': category.pk})
+        self.assertEqual(response.context['cl'].result_count, 2)
+
+    def test_minimum_three_records_per_model(self):
+        for model in [Category, Brand, BrandProfile, Size, Product]:
+            self.assertGreaterEqual(model.objects.count(), 3)
+            for record in model.objects.all():
+                record.full_clean()
