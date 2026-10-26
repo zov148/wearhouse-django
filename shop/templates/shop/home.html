@@ -1,0 +1,7 @@
+{% extends 'shop/base.html' %}
+{% block title %}Главная{% endblock %}
+{% block content %}
+<section class="hero wrap"><div class="hero-copy"><p class="eyebrow">НОВАЯ КОЛЛЕКЦИЯ / ОСЕНЬ 2026</p><h1>Твой ритм.<br>Твои правила.</h1><p class="lead">Одежда, в которой удобно быть собой.<br>Спокойные цвета, свободный крой и ничего лишнего.</p><a class="button" href="{% url 'shop:catalog' %}">Смотреть каталог <span>↗</span></a><p class="hero-bottom">01 / ВЕЩИ ДЛЯ РЕАЛЬНОЙ ЖИЗНИ</p></div><div class="hero-visual"><span class="visual-tag">EVERYDAY<br>ESSENTIALS</span><div class="garment hoodie"></div><span class="visual-number">01—26</span><span class="visual-caption">СВОБОДА В КАЖДОМ ДВИЖЕНИИ</span></div></section>
+<section class="wrap collection"><div class="section-heading"><div><p class="eyebrow">ТВОЯ НОВАЯ БАЗА</p><h2>Начни с любимого</h2></div><a class="text-link" href="{% url 'shop:catalog' %}">Весь каталог ↗</a></div><div class="products">{% for product in products %}{% include 'shop/product.html' %}{% endfor %}</div></section>
+<section class="about-strip wrap"><p>Не гонимся за трендами.<br><strong>Создаём основу твоего гардероба.</strong></p><a class="text-link" href="{% url 'shop:about' %}">Знакомство с WEARHOUSE ↗</a></section>
+{% endblock %}
