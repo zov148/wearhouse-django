@@ -1,10 +1,15 @@
 {% load static %}
 <!doctype html>
 <html lang="ru">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{% block title %}WEARHOUSE{% endblock %} — магазин одежды</title><link rel="stylesheet" href="{% static 'shop/style.css' %}"></head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}WEARHOUSE{% endblock %} — магазин одежды</title>
+  <link rel="stylesheet" href="{% static 'shop/styles.css' %}">
+  <script src="{% static 'shop/script.js' %}" defer></script>
+</head>
 <body>
-<div class="announcement">Меньше лишнего. Больше любимого.</div>
-<header class="header wrap"><a class="logo" href="{% url 'shop:home' %}">WEARHOUSE<span>ОДЕЖДА НА КАЖДЫЙ ДЕНЬ</span></a><nav aria-label="Основная навигация"><a href="{% url 'shop:home' %}" {% if page == 'home' %}aria-current="page"{% endif %}>Главная</a><a href="{% url 'shop:catalog' %}" {% if page == 'catalog' %}aria-current="page"{% endif %}>Каталог</a><a href="{% url 'shop:about' %}" {% if page == 'about' %}aria-current="page"{% endif %}>О нас</a></nav><span class="header-note">БАЗОВЫЕ ВЕЩИ / 2026</span></header>
+{% include 'shop/includes/header.html' %}
 <main>{% block content %}{% endblock %}</main>
-<footer><div class="wrap footer-grid"><div><a class="logo" href="{% url 'shop:home' %}">WEARHOUSE</a><p>Простые вещи. Твой характер.</p></div><nav aria-label="Навигация в подвале"><a href="{% url 'shop:home' %}">Главная</a><a href="{% url 'shop:catalog' %}">Каталог</a><a href="{% url 'shop:about' %}">О нас</a></nav><p>Учебный интернет-магазин одежды<br>© {% now 'Y' %} WEARHOUSE</p></div></footer>
+{% include 'shop/includes/footer.html' %}
 </body></html>
