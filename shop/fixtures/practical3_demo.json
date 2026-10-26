@@ -1,0 +1,235 @@
+[
+{
+  "model": "shop.category",
+  "pk": 1,
+  "fields": {
+    "name": "Футболки",
+    "description": ""
+  }
+},
+{
+  "model": "shop.category",
+  "pk": 2,
+  "fields": {
+    "name": "Худи",
+    "description": ""
+  }
+},
+{
+  "model": "shop.category",
+  "pk": 3,
+  "fields": {
+    "name": "Брюки",
+    "description": ""
+  }
+},
+{
+  "model": "shop.category",
+  "pk": 4,
+  "fields": {
+    "name": "Свитшоты",
+    "description": "Повседневные свитшоты свободного кроя"
+  }
+},
+{
+  "model": "shop.brand",
+  "pk": 1,
+  "fields": {
+    "name": "WEARHOUSE",
+    "country": "Россия"
+  }
+},
+{
+  "model": "shop.brand",
+  "pk": 2,
+  "fields": {
+    "name": "URBAN",
+    "country": "Россия"
+  }
+},
+{
+  "model": "shop.brandprofile",
+  "pk": 1,
+  "fields": {
+    "brand": 1,
+    "website": "https://example.com/",
+    "description": "Демонстрационный бренд повседневной одежды."
+  }
+},
+{
+  "model": "shop.brandprofile",
+  "pk": 2,
+  "fields": {
+    "brand": 2,
+    "website": "https://example.org/",
+    "description": "Учебный бренд городской одежды."
+  }
+},
+{
+  "model": "shop.size",
+  "pk": 1,
+  "fields": {
+    "name": "S"
+  }
+},
+{
+  "model": "shop.size",
+  "pk": 2,
+  "fields": {
+    "name": "M"
+  }
+},
+{
+  "model": "shop.size",
+  "pk": 3,
+  "fields": {
+    "name": "L"
+  }
+},
+{
+  "model": "shop.size",
+  "pk": 4,
+  "fields": {
+    "name": "XL"
+  }
+},
+{
+  "model": "shop.size",
+  "pk": 5,
+  "fields": {
+    "name": "XXL"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 1,
+  "fields": {
+    "name": "Футболка Essential",
+    "category": 1,
+    "brand": 1,
+    "price": "1990.00",
+    "stock": 10,
+    "color": "Молочный",
+    "kind": "tee",
+    "tone": "cream",
+    "sizes": [
+      1,
+      2,
+      3
+    ]
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 2,
+  "fields": {
+    "name": "Худи Everyday",
+    "category": 2,
+    "brand": 1,
+    "price": "4990.00",
+    "stock": 10,
+    "color": "Шалфей",
+    "kind": "hoodie",
+    "tone": "sage",
+    "sizes": [
+      1,
+      2,
+      3
+    ]
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 3,
+  "fields": {
+    "name": "Брюки Straight",
+    "category": 3,
+    "brand": 1,
+    "price": "4490.00",
+    "stock": 10,
+    "color": "Графит",
+    "kind": "pants",
+    "tone": "charcoal",
+    "sizes": [
+      1,
+      2,
+      3
+    ]
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 4,
+  "fields": {
+    "name": "Футболка Relaxed",
+    "category": 1,
+    "brand": 1,
+    "price": "2490.00",
+    "stock": 10,
+    "color": "Терракота",
+    "kind": "tee",
+    "tone": "clay",
+    "sizes": [
+      1,
+      2,
+      3
+    ]
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 5,
+  "fields": {
+    "name": "Худи Weekend",
+    "category": 2,
+    "brand": 1,
+    "price": "5490.00",
+    "stock": 10,
+    "color": "Песочный",
+    "kind": "hoodie",
+    "tone": "sand",
+    "sizes": [
+      1,
+      2,
+      3
+    ]
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 6,
+  "fields": {
+    "name": "Брюки Wide",
+    "category": 3,
+    "brand": 1,
+    "price": "4990.00",
+    "stock": 10,
+    "color": "Оливковый",
+    "kind": "pants",
+    "tone": "olive",
+    "sizes": [
+      1,
+      2,
+      3
+    ]
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 7,
+  "fields": {
+    "name": "Свитшот Urban",
+    "category": 4,
+    "brand": 2,
+    "price": "3990.50",
+    "stock": 12,
+    "color": "Графит",
+    "kind": "hoodie",
+    "tone": "charcoal",
+    "sizes": [
+      2,
+      5
+    ]
+  }
+}
+]

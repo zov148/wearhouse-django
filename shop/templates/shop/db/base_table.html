@@ -1,0 +1,36 @@
+{% extends 'shop/base.html' %}
+{% block title %}{{ table_title }}{% endblock %}
+{% block content %}
+<section class="wrap database">
+  <p class="eyebrow">УЧЕБНАЯ БАЗА МАГАЗИНА / SQLITE</p><h1>{{ table_title }}</h1>
+  <nav class="db-nav" aria-label="Таблицы базы данных">
+    <a href="{% url 'shop:categories' %}" {% if table == 'categories' %}aria-current="page"{% endif %}>Категории</a>
+    <a href="{% url 'shop:brands' %}" {% if table == 'brands' %}aria-current="page"{% endif %}>Бренды</a>
+    <a href="{% url 'shop:profiles' %}" {% if table == 'profiles' %}aria-current="page"{% endif %}>Профили брендов</a>
+    <a href="{% url 'shop:sizes' %}" {% if table == 'sizes' %}aria-current="page"{% endif %}>Размеры</a>
+    <a href="{% url 'shop:products' %}" {% if table == 'products' %}aria-current="page"{% endif %}>Товары</a>
+  </nav>
+  {% block table_description %}{% endblock %}
+  {% for message in messages %}<p class="db-success" role="status">{{ message }}</p>{% endfor %}
+  <div class="db-layout">
+    <section class="db-form"><h2>Добавить запись</h2>
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {% if form.errors %}<p class="db-errors" role="alert">Запись не сохранена. Исправьте ошибки ниже.</p>{% endif %}
+        {{ form.non_field_errors }}
+        {% for field in form %}<div class="form-field">
+          {{ field.label_tag }}{{ field }}
+          {% if field.help_text %}<p class="field-help">{{ field.help_text }}</p>{% endif %}
+          {% for error in field.errors %}<p class="db-errors" role="alert">{{ error }}</p>{% endfor %}
+        </div>{% endfor %}
+        <button class="button" type="submit">Добавить запись</button>
+      </form>
+    </section>
+    <section class="db-list"><h2>Записи в базе <span>({{ rows|length }})</span></h2>
+      <div class="table-scroll"><table><thead><tr>{% for column in columns %}<th scope="col">{{ column }}</th>{% endfor %}</tr></thead>
+        <tbody>{% for row in rows %}<tr>{% for cell in row %}<td>{{ cell }}</td>{% endfor %}</tr>{% empty %}<tr><td colspan="{{ columns|length }}">Записей пока нет. Добавьте первую запись с помощью формы.</td></tr>{% endfor %}</tbody>
+      </table></div>
+    </section>
+  </div>
+</section>
+{% endblock %}
